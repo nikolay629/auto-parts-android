@@ -9,8 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
+import com.nikolay.autoparts.MainActivity;
+import com.nikolay.autoparts.R;
 import com.nikolay.autoparts.databinding.FragmentHomeBinding;
+import com.nikolay.autoparts.ui.part.PartFragment;
 
 public class HomeFragment extends Fragment {
 
@@ -26,6 +30,10 @@ public class HomeFragment extends Fragment {
 
         final TextView textView = binding.homeTitleTV;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+
+        binding.homeFilterB.setOnClickListener(this::searchPart);
+
+
         return root;
     }
 
@@ -33,5 +41,9 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public void searchPart(View view) {
+        Navigation.findNavController(view).navigate(R.id.nav_part);
     }
 }
