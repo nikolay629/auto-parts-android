@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".ui.home.HomeFragment">
+    tools:context=".ui.search.SearchFragment">
 
     <TextView
         android:id="@+id/homeTitleTV"
@@ -13,10 +13,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="50dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
         android:gravity="center"
+        android:textAlignment="center"
         android:textColor="@color/black"
+        android:textSize="20sp"
+        android:text="Select Filter"
         app:layout_constraintBottom_toTopOf="@+id/homeBrandS"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -150,12 +151,11 @@
         android:layout_marginBottom="200dp"
         android:text="Search"
         android:backgroundTint="#0f3e3e"
+        android:onClick="search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homePartNameS" />
+        app:layout_constraintTop_toBottomOf="@+id/homePartNameS"/>
 
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout >

@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".ui.part.PartFragment"
-    >
+    tools:context=".ui.search.PartResultFragment">
 
     <ListView
         android:layout_width="match_parent"
