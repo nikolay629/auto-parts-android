@@ -4,15 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".ui.part.PartFragment"
-    >
+    tools:context=".ui.brand.BrandListFragment">
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/partLV"
+        android:id="@+id/brandLV"
         />
 
 </RelativeLayout>

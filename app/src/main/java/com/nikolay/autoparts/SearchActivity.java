@@ -21,7 +21,7 @@ public class SearchActivity extends BaseActivity {
 
 
         getSupportFragmentManager().beginTransaction().replace(
-                R.id.frameLayout,
+                R.id.searchFL,
                 new SearchFragment(),
                 "SearchFragment"
         ).commit();
@@ -29,7 +29,7 @@ public class SearchActivity extends BaseActivity {
 
     public void search(View view) {
         getSupportFragmentManager().beginTransaction().replace(
-                R.id.frameLayout,
+                R.id.searchFL,
                 new PartResultFragment(),
                 "PartResultFragment"
         ).commit();
