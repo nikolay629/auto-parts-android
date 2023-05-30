@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.brand.CreateEditFragment"
+    tools:context=".ui.brand.BrandCreateEditFragment"
     >
 
 
     <TextView
-        android:id="@+id/createEditCategoryTitleTV"
+        android:id="@+id/createEditBrandTitleTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -25,22 +25,22 @@
         app:layout_constraintVertical_bias="0.221" />
 
     <TextView
-        android:id="@+id/createEditCategoryNameTV"
+        android:id="@+id/createEditBrandNameTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:text="Category Name"
+        android:text="Brand Name"
         android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createEditCategoryTitleTV"
+        app:layout_constraintTop_toBottomOf="@+id/createEditBrandTitleTV"
         app:layout_constraintVertical_bias="0.274" />
 
     <EditText
-        android:id="@+id/createEditCategoryNameET"
+        android:id="@+id/createEditBrandNameET"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -51,11 +51,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createEditCategoryNameTV"
+        app:layout_constraintTop_toBottomOf="@+id/createEditBrandNameTV"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/createEditCategorySaveB"
+        android:id="@+id/createEditBrandSaveB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
@@ -65,6 +65,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createEditCategoryNameET"
+        app:layout_constraintTop_toBottomOf="@+id/createEditBrandNameET"
         app:layout_constraintVertical_bias="0.447" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,19 +1,17 @@
 package com.nikolay.autoparts.model;
 
-import androidx.annotation.NonNull;
-
-public class Brand {
+public class Category {
 
     private int id;
     private String name;
 
-    public Brand() {}
+    public Category() {}
 
-    public Brand(String name) {
+    public Category(String name) {
         this.name = name;
     }
 
-    public Brand(int id, String name) {
+    public Category(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -32,11 +30,5 @@ public class Brand {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return getName() ;
     }
 }

@@ -38,7 +38,7 @@ public class BrandListAdapter extends ArrayAdapter<Brand> {
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         convertView = layoutInflater.inflate(resource, parent, false);
-        TextView nameTV = convertView.findViewById(R.id.categoryNameTV);
+        TextView nameTV = convertView.findViewById(R.id.brandNameTV);
 
         nameTV.setText(name);
         return convertView;

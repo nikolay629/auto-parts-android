@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nikolay.autoparts.databinding.ActivityBrandBinding;
 import com.nikolay.autoparts.ui.brand.BrandListFragment;
-import com.nikolay.autoparts.ui.brand.CreateEditFragment;
+import com.nikolay.autoparts.ui.brand.BrandCreateEditFragment;
 
 public class BrandActivity extends BaseActivity {
 
@@ -38,7 +38,7 @@ public class BrandActivity extends BaseActivity {
         if (currentFragment != null && currentFragment.isVisible()) {
             getSupportFragmentManager().beginTransaction().replace(
                     R.id.brandFL,
-                    new CreateEditFragment(),
+                    new BrandCreateEditFragment(),
                     "CreateEditFragment"
             ).commit();
             createB.setImageResource(R.drawable.back);

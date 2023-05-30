@@ -1,35 +1,29 @@
-package com.nikolay.autoparts.ui.brand;
+package com.nikolay.autoparts.ui.model;
 
 import android.os.Bundle;
 
-import androidx.appcompat.widget.ViewUtils;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.nikolay.autoparts.R;
 import com.nikolay.autoparts.adapters.BrandListAdapter;
-import com.nikolay.autoparts.adapters.PartListAdapter;
-import com.nikolay.autoparts.database.BrandDatabase;
+import com.nikolay.autoparts.adapters.ModelListAdapter;
 import com.nikolay.autoparts.model.Brand;
-import com.nikolay.autoparts.model.Part;
-import com.nikolay.autoparts.ui.search.PartResultFragment;
+import com.nikolay.autoparts.model.Model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link BrandListFragment#newInstance} factory method to
+ * Use the {@link ModelListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BrandListFragment extends Fragment {
+public class ModelListFragment extends Fragment {
 
-    private BrandDatabase brandDatabase;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -39,7 +33,7 @@ public class BrandListFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public BrandListFragment() {
+    public ModelListFragment() {
         // Required empty public constructor
     }
 
@@ -49,11 +43,11 @@ public class BrandListFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment BrandListFragment.
+     * @return A new instance of fragment ModelListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BrandListFragment newInstance(String param1, String param2) {
-        BrandListFragment fragment = new BrandListFragment();
+    public static ModelListFragment newInstance(String param1, String param2) {
+        ModelListFragment fragment = new ModelListFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -71,20 +65,20 @@ public class BrandListFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_brand_list, container, false);
-        ListView mListView = (ListView) view.findViewById(R.id.brandLV);
+    public View onCreateView(
+            LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState
+    ) {
+        View view = inflater.inflate(R.layout.fragment_model_list, container, false);
+        ListView mListView = (ListView) view.findViewById(R.id.modelLV);
+        ArrayList<Model> models = new ArrayList<>();
 
-        brandDatabase = new BrandDatabase(getContext());
-        ArrayList<Brand> brandList = brandDatabase.getAll();
+        ModelListAdapter modelListAdapter = new ModelListAdapter(this.getActivity(), R.layout.model_adapter_view_layout, models);
+        mListView.setAdapter(modelListAdapter);
 
-        BrandListAdapter brandListAdapter = new BrandListAdapter(this.getActivity(), R.layout.brand_adapter_view_layout, brandList);
-        mListView.setAdapter(brandListAdapter);
+
 
         return view;
     }
-
-
 }
