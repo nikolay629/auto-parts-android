@@ -14,6 +14,7 @@ public class BrandActivity extends BaseActivity {
 
     private ActivityBrandBinding activityBrandBinding;
     private FloatingActionButton createB;
+    private FloatingActionButton deleteB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +23,11 @@ public class BrandActivity extends BaseActivity {
         setContentView(activityBrandBinding.getRoot());
         navigationView.setCheckedItem(R.id.nav_brand);
 
-        createB = findViewById(R.id.categoryCreateB);
+        createB = findViewById(R.id.brandCreateB);
+        deleteB = findViewById(R.id.brandDeleteB);
+
         createB.setOnClickListener(this::onCreateButton);
+        deleteB.setVisibility(View.GONE);
 
         getSupportFragmentManager().beginTransaction().replace(
                 R.id.brandFL,
@@ -48,6 +52,7 @@ public class BrandActivity extends BaseActivity {
                     new BrandListFragment(),
                     "BrandListFragment"
             ).commit();
+            deleteB.setVisibility(View.GONE);
             createB.setImageResource(R.drawable.create);
         }
     }

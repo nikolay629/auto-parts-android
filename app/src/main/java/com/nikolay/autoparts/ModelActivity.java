@@ -17,6 +17,8 @@ public class ModelActivity extends BaseActivity {
 
     private ActivityModelBinding activityModelBinding;
     private FloatingActionButton createB;
+    private FloatingActionButton deleteB;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,9 @@ public class ModelActivity extends BaseActivity {
         navigationView.setCheckedItem(R.id.nav_model);
 
         createB = findViewById(R.id.modelCreateB);
+        deleteB = findViewById(R.id.modelDeleteB);
+
+        deleteB.setVisibility(View.GONE);
         createB.setOnClickListener(this::onCreateButton);
 
         getSupportFragmentManager().beginTransaction().replace(
@@ -50,6 +55,7 @@ public class ModelActivity extends BaseActivity {
                     new ModelListFragment(),
                     "ModelListFragment"
             ).commit();
+            deleteB.setVisibility(View.GONE);
             createB.setImageResource(R.drawable.create);
         }
     }

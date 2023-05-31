@@ -7,8 +7,20 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 
 import com.nikolay.autoparts.R;
+import com.nikolay.autoparts.database.BrandDatabase;
+import com.nikolay.autoparts.database.CategoryDatabase;
+import com.nikolay.autoparts.database.ModelDatabase;
+import com.nikolay.autoparts.model.Brand;
+import com.nikolay.autoparts.model.Category;
+import com.nikolay.autoparts.model.Model;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,19 +38,18 @@ public class SearchFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public SearchFragment() {
-        // Required empty public constructor
-    }
+    private Spinner homeBrandS;
+    private Spinner homeModelS;
+    private Spinner homeCategoryS;
+    private Spinner homePartNameS;
+    private Button homeSearchB;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SearchFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+    private BrandDatabase brandDatabase;
+    private ModelDatabase modelDatabase;
+    private CategoryDatabase categoryDatabase;
+
+    public SearchFragment() {}
+
     public static SearchFragment newInstance(String param1, String param2) {
         SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
@@ -55,12 +66,58 @@ public class SearchFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        brandDatabase = new BrandDatabase(getContext());
+        modelDatabase = new ModelDatabase(getContext());
+        categoryDatabase = new CategoryDatabase(getContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_search, container, false);
+        getActivity().findViewById(R.id.homeBackB).setVisibility(View.GONE);
+
+        homeBrandS = view.findViewById(R.id.homeBrandS);
+        homeModelS = view.findViewById(R.id.homeModelS);
+        homeCategoryS = view.findViewById(R.id.homeCategoryS);
+        homePartNameS = view.findViewById(R.id.homePartNameS);
+        homeSearchB = view.findViewById(R.id.homeSearchB);
+
+        List<Brand> brandList = new ArrayList<>();
+        brandList.add(new Brand());
+        brandList.addAll(brandDatabase.getAll());
+        ArrayAdapter<Brand> brandAdapter = new ArrayAdapter<Brand>(getContext(), R.layout.spinner, brandList);
+        brandAdapter.setDropDownViewResource(R.layout.spinner);
+        homeBrandS.setAdapter(brandAdapter);
+
+        List<Model> modelList = new ArrayList<>();
+        modelList.add(new Model());
+        modelList.addAll(modelDatabase.getAll());
+        ArrayAdapter<Model> modelAdapter = new ArrayAdapter<Model>(getContext(), R.layout.spinner, modelList);
+        modelAdapter.setDropDownViewResource(R.layout.spinner);
+        homeModelS.setAdapter(modelAdapter);
+
+        List<Category> categoryList = new ArrayList<>();
+        categoryList.add(new Category());
+        categoryList.addAll(categoryDatabase.getAll());
+        ArrayAdapter<Category> categoryAdapter = new ArrayAdapter<Category>(getContext(), R.layout.spinner, categoryList);
+        categoryAdapter.setDropDownViewResource(R.layout.spinner);
+        homeCategoryS.setAdapter(categoryAdapter);
+
+        homeSearchB.setOnClickListener(this::search);
+        return view;
     }
+
+    private void search(View view) {
+        getActivity().getSupportFragmentManager().beginTransaction().replace(
+                R.id.searchFL,
+                new PartResultFragment(),
+                "PartResultFragment"
+        ).commit();
+    }
+
+
+
+
 }

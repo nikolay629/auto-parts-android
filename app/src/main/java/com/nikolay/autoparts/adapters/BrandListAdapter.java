@@ -34,8 +34,6 @@ public class BrandListAdapter extends ArrayAdapter<Brand> {
         int id = getItem(position).getId();
         String name = getItem(position).getName();
 
-        Brand brand = new Brand(id, name);
-
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         convertView = layoutInflater.inflate(resource, parent, false);
         TextView nameTV = convertView.findViewById(R.id.brandNameTV);
@@ -43,4 +41,6 @@ public class BrandListAdapter extends ArrayAdapter<Brand> {
         nameTV.setText(name);
         return convertView;
     }
+
+
 }

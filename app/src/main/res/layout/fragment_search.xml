@@ -67,7 +67,7 @@
         android:textColor="@color/black"
         android:textSize="18sp"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/homePartCategoryTV"
+        app:layout_constraintBottom_toTopOf="@+id/homeCategoryTV"
         app:layout_constraintEnd_toStartOf="@+id/homeModelS"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,13 +80,13 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="20dp"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/homePartCategoryS"
+        app:layout_constraintBottom_toTopOf="@+id/homeCategoryS"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/homeModelTV"
         app:layout_constraintTop_toBottomOf="@+id/homeBrandS" />
 
     <TextView
-        android:id="@+id/homePartCategoryTV"
+        android:id="@+id/homeCategoryTV"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
@@ -96,13 +96,13 @@
         android:textSize="18sp"
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/homePartNameTV"
-        app:layout_constraintEnd_toStartOf="@+id/homePartCategoryS"
+        app:layout_constraintEnd_toStartOf="@+id/homeCategoryS"
         app:layout_constraintHorizontal_bias="0.006"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/homeModelTV" />
 
     <Spinner
-        android:id="@+id/homePartCategoryS"
+        android:id="@+id/homeCategoryS"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
@@ -110,7 +110,7 @@
         android:gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/homePartNameS"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/homePartCategoryTV"
+        app:layout_constraintStart_toEndOf="@+id/homeCategoryTV"
         app:layout_constraintTop_toBottomOf="@+id/homeModelS" />
 
     <TextView
@@ -123,11 +123,11 @@
         android:textColor="@color/black"
         android:textSize="18sp"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/homeFilterB"
+        app:layout_constraintBottom_toTopOf="@+id/homeSearchB"
         app:layout_constraintEnd_toStartOf="@+id/homePartNameS"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/homePartCategoryTV" />
+        app:layout_constraintTop_toBottomOf="@+id/homeCategoryTV" />
 
     <Spinner
         android:id="@+id/homePartNameS"
@@ -136,13 +136,13 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="20dp"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/homeFilterB"
+        app:layout_constraintBottom_toTopOf="@+id/homeSearchB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/homePartNameTV"
-        app:layout_constraintTop_toBottomOf="@+id/homePartCategoryS" />
+        app:layout_constraintTop_toBottomOf="@+id/homeCategoryS" />
 
     <Button
-        android:id="@+id/homeFilterB"
+        android:id="@+id/homeSearchB"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"

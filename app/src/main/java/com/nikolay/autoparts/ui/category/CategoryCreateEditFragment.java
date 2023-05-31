@@ -1,5 +1,6 @@
 package com.nikolay.autoparts.ui.category;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,8 +8,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.nikolay.autoparts.BrandActivity;
+import com.nikolay.autoparts.CategoryActivity;
 import com.nikolay.autoparts.R;
+import com.nikolay.autoparts.database.BrandDatabase;
+import com.nikolay.autoparts.database.CategoryDatabase;
+import com.nikolay.autoparts.model.Brand;
+import com.nikolay.autoparts.model.Category;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +35,10 @@ public class CategoryCreateEditFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private CategoryDatabase categoryDatabase;
+    private EditText createEditCategoryNameET;
+    private Button createB;
 
     public CategoryCreateEditFragment() {
         // Required empty public constructor
@@ -55,12 +69,34 @@ public class CategoryCreateEditFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        categoryDatabase = new CategoryDatabase(getContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_category_create_edit, container, false);
+        View view = inflater.inflate(R.layout.fragment_category_create_edit, container, false);
+
+        createEditCategoryNameET = view.findViewById(R.id.createEditCategoryNameET);
+        createB = view.findViewById(R.id.createEditCategorySaveB);
+
+        createB.setOnClickListener(this::onClickCreateButton);
+        return view;
+    }
+
+
+    private void onClickCreateButton(View view) {
+        if (!this.isValid()) {
+            Toast.makeText(getContext(), "Fill all fields!", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        categoryDatabase.insert(new Category(createEditCategoryNameET.getText().toString()));
+        startActivity(new Intent(getActivity(), CategoryActivity.class));
+    }
+
+    private boolean isValid() {
+        return !createEditCategoryNameET.getText().toString().isEmpty();
     }
 }

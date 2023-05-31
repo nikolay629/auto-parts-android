@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.nikolay.autoparts.R;
+import com.nikolay.autoparts.model.Brand;
 import com.nikolay.autoparts.model.Model;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class ModelListAdapter extends ArrayAdapter<Model> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+        Brand brand = getItem(position).getBrand();
         String name = getItem(position).getName();
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
@@ -37,6 +39,7 @@ public class ModelListAdapter extends ArrayAdapter<Model> {
         TextView brandTV = convertView.findViewById(R.id.listBrandNameTV);
         TextView nameTV = convertView.findViewById(R.id.listModelNameTV);
 
+        brandTV.setText(brand.getName());
         nameTV.setText(name);
         return convertView;
     }

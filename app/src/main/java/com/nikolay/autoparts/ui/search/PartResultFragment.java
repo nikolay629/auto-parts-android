@@ -67,6 +67,7 @@ public class PartResultFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_part_result, container, false);
+        getActivity().findViewById(R.id.homeBackB).setVisibility(View.VISIBLE);
         ListView mListView = (ListView) view.findViewById(R.id.partLV);
         Part part1 = new Part("test1", 12, 27.30f);
         Part part2 = new Part("test2", 14, 10.30f);

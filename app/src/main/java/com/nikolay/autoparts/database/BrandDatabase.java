@@ -43,4 +43,33 @@ public class BrandDatabase extends DatabaseHelper{
         return brandList;
     }
 
+    public Brand getById(String id) {
+        database = this.getReadableDatabase();
+        cursor = database.rawQuery("select * from brand where id like ?", new String[] {id});
+
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                brand = new Brand(cursor.getInt(0), cursor.getString(1));
+                cursor.moveToNext();
+            }
+        }
+
+        return brand;
+    }
+
+    public void update(Brand brand) {
+        contentValues = new ContentValues();
+        contentValues.put("name", brand.getName());
+
+        String[] args = new String[] {brand.getId() + ""};
+
+        database = this.getWritableDatabase();
+        database.update("brand", contentValues, "id=?", args);
+    }
+
+    public void delete(Brand brand) {
+        String[] args = new String[] {brand.getId() + ""};
+        database = this.getWritableDatabase();
+        database.delete("brand", "id=?", args);
+    }
 }

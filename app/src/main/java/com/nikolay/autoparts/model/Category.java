@@ -1,5 +1,7 @@
 package com.nikolay.autoparts.model;
 
+import androidx.annotation.NonNull;
+
 public class Category {
 
     private int id;
@@ -30,5 +32,11 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return this.getName();
     }
 }
