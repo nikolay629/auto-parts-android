@@ -121,8 +121,8 @@ public class SearchFragment extends Fragment {
 
     private void search(View view) {
         Fragment fragment = PartResultFragment.newInstance(
-            homeModelS.getSelectedItem().toString(),
-            homeCategoryS.getSelectedItem().toString()
+            ((Model) homeModelS.getSelectedItem()).getId(),
+            ((Category) homeCategoryS.getSelectedItem()).getId()
         );
         getActivity().getSupportFragmentManager().beginTransaction().replace(
                 R.id.searchFL,

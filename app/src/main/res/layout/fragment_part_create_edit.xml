@@ -120,10 +120,10 @@
         android:text="Part Name"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/partCreateEditPartTitleTV"
-        app:layout_constraintVertical_bias="0.413" />
+        app:layout_constraintVertical_bias="0.446" />
 
     <EditText
         android:id="@+id/partCreateEditPartNameET"
@@ -147,7 +147,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="15dp"
         android:gravity="center"
         android:text="Quantity"
@@ -177,14 +177,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="15dp"
         android:gravity="center"
         android:text="Price"
         app:layout_constraintBottom_toTopOf="@+id/partCreateEditPartPriceET"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/partCreateEditQtyTV"
-        app:layout_constraintTop_toBottomOf="@+id/partCreateEditPartNameET" />
+        app:layout_constraintTop_toBottomOf="@+id/partCreateEditPartNameET"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/partCreateEditPartPriceET"
@@ -207,7 +208,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
         android:layout_marginEnd="70dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="50dp"
         android:text="Create"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

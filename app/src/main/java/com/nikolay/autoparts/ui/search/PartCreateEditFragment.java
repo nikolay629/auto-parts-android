@@ -57,9 +57,6 @@ public class PartCreateEditFragment extends Fragment {
     private FloatingActionButton partCreateB;
     private FloatingActionButton partDeleteB;
 
-    private Brand brand;
-    private Model model;
-    private Category category;
     private Part part;
 
     private BrandDatabase brandDatabase;
@@ -136,6 +133,9 @@ public class PartCreateEditFragment extends Fragment {
                 ArrayAdapter<Model> modelAdapter = new ArrayAdapter<Model>(getContext(), R.layout.spinner, modelList);
                 modelAdapter.setDropDownViewResource(R.layout.spinner);
                 partCreateEditModelS.setAdapter(modelAdapter);
+                if (!createForm) {
+                    partCreateEditModelS.setSelection(getModelPosition(modelAdapter, part.getModel()));
+                }
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
@@ -158,7 +158,6 @@ public class PartCreateEditFragment extends Fragment {
 
         if (!createForm) {
             partCreateEditBrandS.setSelection(getBrandPosition(brandAdapter, part.getModel().getBrand()));
-            partCreateEditModelS.setSelection(getModelPosition(modelAdapter, part.getModel()));
             partCreateEditCategoryS.setSelection(getCategoryPosition(categoryAdapter, part.getCategory()));
 
             partCreateEditPartNameET.setText(part.getName());
@@ -168,7 +167,6 @@ public class PartCreateEditFragment extends Fragment {
 
             partDeleteB.setVisibility(View.VISIBLE);
             partCreateB.setVisibility(View.GONE);
-            homeBackB.setOnClickListener(this::onClickDeleteButton);
         } else {
             partDeleteB.setVisibility(View.GONE);
             partCreateB.setVisibility(View.GONE);
@@ -194,8 +192,8 @@ public class PartCreateEditFragment extends Fragment {
             return;
         }
 
-        model = ((Model) partCreateEditModelS.getSelectedItem());
-        category = ((Category) partCreateEditCategoryS.getSelectedItem());
+        part.setModel((Model) partCreateEditModelS.getSelectedItem());
+        part.setCategory((Category) partCreateEditCategoryS.getSelectedItem());
         part.setName(partCreateEditPartNameET.getText().toString());
         part.setQty(Integer.parseInt(partCreateEditPartQtyET.getText().toString()));
         part.setPrice(Float.parseFloat(partCreateEditPartPriceET.getText().toString()));
@@ -225,7 +223,10 @@ public class PartCreateEditFragment extends Fragment {
 
     private int getBrandPosition(ArrayAdapter<Brand> arrayAdapter, Brand brand) {
         for (int position = 0; position < arrayAdapter.getCount(); position++) {
-            if(arrayAdapter.getItem(position).toString().equals(brand.toString())) {
+            if(
+                arrayAdapter.getItem(position).toString() != null &&
+                arrayAdapter.getItem(position).toString().equals(brand.toString())
+            ) {
                 return position;
             }
         }
@@ -234,7 +235,10 @@ public class PartCreateEditFragment extends Fragment {
 
     private int getModelPosition(ArrayAdapter<Model> arrayAdapter, Model model) {
         for (int position = 0; position < arrayAdapter.getCount(); position++) {
-            if(arrayAdapter.getItem(position).toString().equals(model.toString())) {
+            if(
+                arrayAdapter.getItem(position).toString() != null &&
+                arrayAdapter.getItem(position).toString().equals(model.toString())
+            ) {
                 return position;
             }
         }
@@ -243,7 +247,10 @@ public class PartCreateEditFragment extends Fragment {
 
     private int getCategoryPosition(ArrayAdapter<Category> arrayAdapter, Category category) {
         for (int position = 0; position < arrayAdapter.getCount(); position++) {
-            if(arrayAdapter.getItem(position).toString().equals(category.toString())) {
+            if(
+                arrayAdapter.getItem(position).toString() != null &&
+                arrayAdapter.getItem(position).toString().equals(category.toString())
+            ) {
                 return position;
             }
         }

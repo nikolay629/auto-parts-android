@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.nikolay.autoparts.R;
+import com.nikolay.autoparts.model.Category;
 import com.nikolay.autoparts.model.Part;
 
 import java.util.ArrayList;
@@ -31,21 +32,22 @@ public class PartListAdapter extends ArrayAdapter<Part> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        String name = getItem(position).getName();
-        int qty = getItem(position).getQty();
-        float price = getItem(position).getPrice();
-
-        Part part = new Part(name, qty, price);
+        String categoryName = getItem(position).getCategory().getName();
+        String name         = getItem(position).getName();
+        String qty          = getItem(position).getQty() + "";
+        String price        = getItem(position).getPrice() + "";
 
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         convertView = layoutInflater.inflate(resource, parent, false);
-        TextView nameTV = convertView.findViewById(R.id.partNameTV);
-        TextView qtyTV = convertView.findViewById(R.id.partQtyTV);
-        TextView priceTV = convertView.findViewById(R.id.partPriceTV);
+        TextView categoryTV = convertView.findViewById(R.id.partCategoryTV);
+        TextView nameTV     = convertView.findViewById(R.id.partNameTV);
+        TextView qtyTV      = convertView.findViewById(R.id.partQtyTV);
+        TextView priceTV    = convertView.findViewById(R.id.partPriceTV);
 
+        categoryTV.setText(categoryName);
         nameTV.setText(name);
-        qtyTV.setText(qty + "s");
-        priceTV.setText(price + "");
+        qtyTV.setText(qty);
+        priceTV.setText(price);
 
         return convertView;
     }

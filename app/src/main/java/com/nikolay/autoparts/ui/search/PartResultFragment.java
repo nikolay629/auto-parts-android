@@ -31,18 +31,18 @@ public class PartResultFragment extends Fragment {
     private static final String MODEL_ID = "model_id";
     private static final String CATEGORY_ID = "category_id";
 
-    private String modelId;
-    private String categoryId;
+    private int modelId;
+    private int categoryId;
 
     private PartDatabase partDatabase;
 
     public PartResultFragment() {}
 
-    public static PartResultFragment newInstance(String modelId, String categoryId) {
+    public static PartResultFragment newInstance(int modelId, int categoryId) {
         PartResultFragment fragment = new PartResultFragment();
         Bundle args = new Bundle();
-        args.putString(MODEL_ID, modelId);
-        args.putString(CATEGORY_ID, categoryId);
+        args.putInt(MODEL_ID, modelId);
+        args.putInt(CATEGORY_ID, categoryId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -52,8 +52,8 @@ public class PartResultFragment extends Fragment {
         super.onCreate(savedInstanceState);
         partDatabase = new PartDatabase(getContext());
         if (getArguments() != null) {
-            modelId    = getArguments().getString(MODEL_ID);
-            categoryId = getArguments().getString(CATEGORY_ID);
+            modelId    = getArguments().getInt(MODEL_ID);
+            categoryId = getArguments().getInt(CATEGORY_ID);
         }
     }
 
@@ -68,14 +68,14 @@ public class PartResultFragment extends Fragment {
         ListView mListView = (ListView) view.findViewById(R.id.partLV);
 
         ArrayList<Part> parts;
-        if (modelId == null && categoryId == null) {
+        if (modelId == 0 && categoryId == 0) {
             parts = partDatabase.getAll();
-        } else if (modelId != null && categoryId != null) {
-            parts = partDatabase.getByModelAndCategory(modelId, categoryId);
-        } else if (modelId != null && categoryId == null) {
-            parts = partDatabase.getByModel(modelId);
+        } else if (modelId != 0 && categoryId != 0) {
+            parts = partDatabase.getByModelAndCategory(modelId + "", categoryId + "");
+        } else if (modelId != 0 && categoryId == 0) {
+            parts = partDatabase.getByModel(modelId+ "");
         } else {
-            parts = partDatabase.getByCategory(categoryId);
+            parts = partDatabase.getByCategory(categoryId + "");
         }
 
         PartListAdapter partListAdapter = new PartListAdapter(this.getActivity(), R.layout.part_adapter_view_layout, parts);

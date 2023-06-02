@@ -51,6 +51,9 @@ public class SearchActivity extends BaseActivity {
 
 
     private void onClickBackButton(View view) {
+        homeBackB.setVisibility(View.GONE);
+        partDeleteB.setVisibility(View.GONE);
+        partCreateB.setVisibility(View.VISIBLE);
         getSupportFragmentManager().beginTransaction().replace(
                 R.id.searchFL,
                 new SearchFragment(),
