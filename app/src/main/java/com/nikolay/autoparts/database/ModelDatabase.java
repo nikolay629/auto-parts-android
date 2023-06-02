@@ -65,6 +65,26 @@ public class ModelDatabase extends DatabaseHelper{
         return model;
     }
 
+    public ArrayList<Model> getByBrand(Brand brand) {
+        database = this.getReadableDatabase();
+        cursor = database.rawQuery(
+                "select * from model where brand_id like ?",
+                new String[] {brand.getId() + ""}
+        );
+
+        modelList = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                int id = cursor.getInt(0);
+                brand = brandDatabase.getById(cursor.getInt(1) + "");
+                String name = cursor.getString(2);
+                modelList.add(new Model(id, brand, name));
+                cursor.moveToNext();
+            }
+        }
+        return modelList;
+    }
+
     public void update(Model model) {
         contentValues = new ContentValues();
         contentValues.put("brand_id", model.getBrand().getId());

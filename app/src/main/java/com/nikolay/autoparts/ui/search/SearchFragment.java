@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -90,13 +91,22 @@ public class SearchFragment extends Fragment {
         ArrayAdapter<Brand> brandAdapter = new ArrayAdapter<Brand>(getContext(), R.layout.spinner, brandList);
         brandAdapter.setDropDownViewResource(R.layout.spinner);
         homeBrandS.setAdapter(brandAdapter);
-
-        List<Model> modelList = new ArrayList<>();
-        modelList.add(new Model());
-        modelList.addAll(modelDatabase.getAll());
-        ArrayAdapter<Model> modelAdapter = new ArrayAdapter<Model>(getContext(), R.layout.spinner, modelList);
-        modelAdapter.setDropDownViewResource(R.layout.spinner);
-        homeModelS.setAdapter(modelAdapter);
+        homeBrandS.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                List<Model> modelList = new ArrayList<>();
+                modelList.add(new Model());
+                if (homeBrandS.getSelectedItem().toString() != null) {
+                    modelList.addAll(modelDatabase.getByBrand((Brand)homeBrandS.getSelectedItem()));
+                }
+                ArrayAdapter<Model> modelAdapter = new ArrayAdapter<Model>(getContext(), R.layout.spinner, modelList);
+                modelAdapter.setDropDownViewResource(R.layout.spinner);
+                homeModelS.setAdapter(modelAdapter);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
         List<Category> categoryList = new ArrayList<>();
         categoryList.add(new Category());
@@ -110,14 +120,14 @@ public class SearchFragment extends Fragment {
     }
 
     private void search(View view) {
+        Fragment fragment = PartResultFragment.newInstance(
+            homeModelS.getSelectedItem().toString(),
+            homeCategoryS.getSelectedItem().toString()
+        );
         getActivity().getSupportFragmentManager().beginTransaction().replace(
                 R.id.searchFL,
-                new PartResultFragment(),
+                fragment,
                 "PartResultFragment"
         ).commit();
     }
-
-
-
-
 }

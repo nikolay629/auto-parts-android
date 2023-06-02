@@ -17,7 +17,7 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
     protected Cursor cursor;
 
     public DatabaseHelper(@Nullable Context context) {
-        super(context, NAME, null, 2);
+        super(context, NAME, null, 3);
     }
 
     @Override
@@ -39,7 +39,7 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("create  table part(" +
                 "id integer primary key," +
                 "model_id integer," +
-                "categroy_id integer," +
+                "category_id integer," +
                 "name text," +
                 "qty int," +
                 "price decimal(19,2)" +

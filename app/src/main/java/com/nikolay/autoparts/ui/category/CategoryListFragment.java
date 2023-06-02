@@ -7,14 +7,17 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nikolay.autoparts.R;
 import com.nikolay.autoparts.adapters.BrandListAdapter;
 import com.nikolay.autoparts.adapters.CategoryListAdapter;
 import com.nikolay.autoparts.database.CategoryDatabase;
 import com.nikolay.autoparts.model.Brand;
 import com.nikolay.autoparts.model.Category;
+import com.nikolay.autoparts.ui.brand.BrandCreateEditFragment;
 
 import java.util.ArrayList;
 
@@ -71,7 +74,22 @@ public class CategoryListFragment extends Fragment {
                 categories
         );
         mListView.setAdapter(categoryListAdapter);
-
+        mListView.setOnItemClickListener(this::onItemClick);
         return view;
     }
+
+    private void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        int categoryId = ((Category) adapterView.getItemAtPosition(i)).getId();
+
+        FloatingActionButton categoryCreateB = getActivity().findViewById(R.id.categoryCreateB);
+        categoryCreateB.setImageResource(R.drawable.back);
+
+        Fragment fragment = CategoryCreateEditFragment.newInstance(categoryId);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(
+                R.id.categoryFL,
+                fragment,
+                "CategoryCreateEditFragment"
+        ).commit();
+    }
+
 }

@@ -44,9 +44,9 @@ public class CategoryDatabase extends DatabaseHelper{
         return categoryList;
     }
 
-    public Category getById(String id) {
+    public Category getById(int id) {
         database = this.getReadableDatabase();
-        cursor = database.rawQuery("select * from category where id like ?", new String[] {id});
+        cursor = database.rawQuery("select * from category where id like ?", new String[] {id+""});
 
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
@@ -58,4 +58,19 @@ public class CategoryDatabase extends DatabaseHelper{
         return category;
     }
 
+    public void update(Category category) {
+        contentValues = new ContentValues();
+        contentValues.put("name", category.getName());
+
+        String[] args = new String[] {category.getId() + ""};
+
+        database = this.getWritableDatabase();
+        database.update("category", contentValues, "id=?", args);
+    }
+
+    public void delete(Category category) {
+        String[] args = new String[] {category.getId() + ""};
+        database = this.getWritableDatabase();
+        database.delete("category", "id=?", args);
+    }
 }

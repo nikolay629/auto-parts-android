@@ -18,6 +18,7 @@ public class CategoryActivity extends BaseActivity {
 
     private ActivityCategoryBinding activityCategoryBinding;
     private FloatingActionButton createB;
+    private FloatingActionButton deleteB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +28,10 @@ public class CategoryActivity extends BaseActivity {
         navigationView.setCheckedItem(R.id.nav_category);
 
         createB = findViewById(R.id.categoryCreateB);
-        createB.setOnClickListener(this::onCreateButton);
+        deleteB = findViewById(R.id.categoryDeleteB);
 
+        createB.setOnClickListener(this::onCreateButton);
+        deleteB.setVisibility(View.GONE);
 
         getSupportFragmentManager().beginTransaction().replace(
                 R.id.categoryFL,
@@ -44,7 +47,7 @@ public class CategoryActivity extends BaseActivity {
             getSupportFragmentManager().beginTransaction().replace(
                     R.id.categoryFL,
                     new CategoryCreateEditFragment(),
-                    "ModelCreateEditFragment"
+                    "CategoryCreateEditFragment"
             ).commit();
             createB.setImageResource(R.drawable.back);
         } else {

@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.nikolay.autoparts.BrandActivity;
 import com.nikolay.autoparts.CategoryActivity;
 import com.nikolay.autoparts.R;
@@ -19,6 +21,7 @@ import com.nikolay.autoparts.database.BrandDatabase;
 import com.nikolay.autoparts.database.CategoryDatabase;
 import com.nikolay.autoparts.model.Brand;
 import com.nikolay.autoparts.model.Category;
+import com.nikolay.autoparts.model.Part;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,37 +30,26 @@ import com.nikolay.autoparts.model.Category;
  */
 public class CategoryCreateEditFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String CATEGORY_ID = "categoryId";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private boolean createForm = true;
+    private String title;
+    private int categoryId;
 
-    private CategoryDatabase categoryDatabase;
+    private TextView createEditCategoryTitleTV;
     private EditText createEditCategoryNameET;
     private Button createB;
+    private FloatingActionButton deleteB;
 
-    public CategoryCreateEditFragment() {
-        // Required empty public constructor
-    }
+    private Category category;
+    private CategoryDatabase categoryDatabase;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment CategoryCreateEditFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static CategoryCreateEditFragment newInstance(String param1, String param2) {
+    public CategoryCreateEditFragment() {}
+
+    public static CategoryCreateEditFragment newInstance(int categoryId) {
         CategoryCreateEditFragment fragment = new CategoryCreateEditFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(CATEGORY_ID, categoryId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -65,26 +57,50 @@ public class CategoryCreateEditFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         categoryDatabase = new CategoryDatabase(getContext());
+        if (getArguments() != null) {
+            categoryId = getArguments().getInt(CATEGORY_ID);
+            category   = categoryDatabase.getById(categoryId);
+            createForm = false;
+            title      = "Edit Form";
+        } else {
+            category = new Category();
+            title    = "Create Form";
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(
+            LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState
+    ) {
         View view = inflater.inflate(R.layout.fragment_category_create_edit, container, false);
 
+        createEditCategoryTitleTV = view.findViewById(R.id.createEditCategoryTitleTV);
         createEditCategoryNameET = view.findViewById(R.id.createEditCategoryNameET);
         createB = view.findViewById(R.id.createEditCategorySaveB);
+        deleteB = getActivity().findViewById(R.id.categoryDeleteB);
+
+        createEditCategoryTitleTV.setText(title);
+        createEditCategoryNameET.setText(category.getName());
+
+        if (!createForm) {
+            createB.setText("Update");
+            deleteB.setVisibility(View.VISIBLE);
+            deleteB.setOnClickListener(this::onClickDeleteButton);
+        }
 
         createB.setOnClickListener(this::onClickCreateButton);
         return view;
     }
 
+    private void onClickDeleteButton(View view) {
+        deleteB.setVisibility(View.GONE);
+        categoryDatabase.delete(category);
+        Toast.makeText(getContext(), "Deleted!", Toast.LENGTH_LONG).show();
+        startActivity(new Intent(getActivity(), CategoryActivity.class));
+    }
 
     private void onClickCreateButton(View view) {
         if (!this.isValid()) {
@@ -92,7 +108,16 @@ public class CategoryCreateEditFragment extends Fragment {
             return;
         }
 
-        categoryDatabase.insert(new Category(createEditCategoryNameET.getText().toString()));
+        category.setName(createEditCategoryNameET.getText().toString());
+        if (category.getId() != 0) {
+            categoryDatabase.update(category);
+            Toast.makeText(getContext(), "Updated!", Toast.LENGTH_LONG).show();
+        } else {
+            categoryDatabase.insert(category);
+            Toast.makeText(getContext(), "Created!", Toast.LENGTH_LONG).show();
+        }
+
+        deleteB.setVisibility(View.GONE);
         startActivity(new Intent(getActivity(), CategoryActivity.class));
     }
 
