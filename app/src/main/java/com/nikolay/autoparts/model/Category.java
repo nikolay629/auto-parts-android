@@ -6,6 +6,7 @@ public class Category {
 
     private int id;
     private String name;
+    private int restId;
 
     public Category() {}
 
@@ -16,6 +17,12 @@ public class Category {
     public Category(int id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Category(int id, String name, int restId) {
+        this.id = id;
+        this.name = name;
+        this.restId = restId;
     }
 
     public int getId() {
@@ -32,6 +39,14 @@ public class Category {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getRestId() {
+        return restId;
+    }
+
+    public void setRestId(int restId) {
+        this.restId = restId;
     }
 
     @NonNull

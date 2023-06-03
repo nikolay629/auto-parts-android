@@ -87,9 +87,6 @@ public class PartResultFragment extends Fragment {
     private void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         int partId = ((Part) adapterView.getItemAtPosition(i)).getId();
 
-        FloatingActionButton partCreateB = getActivity().findViewById(R.id.partCreateB);
-        partCreateB.setImageResource(R.drawable.back);
-
         Fragment fragment = PartCreateEditFragment.newInstance(partId);
         getActivity().getSupportFragmentManager().beginTransaction().replace(
                 R.id.searchFL,

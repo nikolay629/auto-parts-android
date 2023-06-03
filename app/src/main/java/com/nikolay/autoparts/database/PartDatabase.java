@@ -10,6 +10,7 @@ import com.nikolay.autoparts.model.Model;
 import com.nikolay.autoparts.model.Part;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PartDatabase extends DatabaseHelper{
 
@@ -39,20 +40,84 @@ public class PartDatabase extends DatabaseHelper{
         database.insert("part", null, contentValues);
     }
 
+    public void insert(List<Part> modelList) {
+        for (Part newPart: modelList) {
+            category = categoryDatabase.getByRestId(newPart.getCategory().getRestId() + "");
+            model = modelDatabase.getByRestId(newPart.getModel().getRestId() + "");
+
+            contentValues = new ContentValues();
+            contentValues.put("category_id", category.getId());
+            contentValues.put("model_id", model.getId());
+            contentValues.put("name", newPart.getName());
+            contentValues.put("qty", newPart.getQty());
+            contentValues.put("price", newPart.getPrice());
+            contentValues.put("rest_id", newPart.getRestId());
+
+            database = this.getWritableDatabase();
+            database.insert("model", null, contentValues);
+        }
+    }
+
     public ArrayList<Part> getAll() {
         database = this.getReadableDatabase();
-        cursor = database.rawQuery("select * from part", null);
+        cursor = database.rawQuery(
+                "select * from part p " +
+                    "order By (Select name from category c where c.id = p.category_id) ASC",
+                null);
 
         partList = new ArrayList<>();
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 int id = cursor.getInt(0);
-                category = categoryDatabase.getById(cursor.getInt(1));
-                model = modelDatabase.getById(cursor.getString(2));
+                Model model = modelDatabase.getById(cursor.getString(1));
+                Category category = categoryDatabase.getById(cursor.getInt(2));
                 String name = cursor.getString(3);
                 int qty = cursor.getInt(4);
                 float price = cursor.getFloat(5);
-                partList.add(new Part(id, category, model, name, qty, price));
+                int restId = cursor.getInt(6);
+                partList.add(new Part(id, category, model, name, qty, price, restId));
+                cursor.moveToNext();
+            }
+        }
+        return partList;
+    }
+
+    public ArrayList<Part> getAllNewData() {
+        database = this.getReadableDatabase();
+        cursor = database.rawQuery("select * from part where rest_id is null", null);
+
+        partList = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                int id = cursor.getInt(0);
+                model = modelDatabase.getById(cursor.getString(1));
+                category = categoryDatabase.getById(cursor.getInt(2));
+                String name = cursor.getString(3);
+                int qty = cursor.getInt(4);
+                float price = cursor.getFloat(5);
+                int restId = cursor.getInt(6);
+                partList.add(new Part(id, category, model, name, qty, price, restId));
+                cursor.moveToNext();
+            }
+        }
+        return partList;
+    }
+
+    public ArrayList<Part> getAllOldData() {
+        database = this.getReadableDatabase();
+        cursor = database.rawQuery("select * from part where rest_id is not null", null);
+
+        partList = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                int id = cursor.getInt(0);
+                model = modelDatabase.getById(cursor.getString(1));
+                category = categoryDatabase.getById(cursor.getInt(2));
+                String name = cursor.getString(3);
+                int qty = cursor.getInt(4);
+                float price = cursor.getFloat(5);
+                int restId = cursor.getInt(6);
+                partList.add(new Part(id, category, model, name, qty, price, restId));
                 cursor.moveToNext();
             }
         }
@@ -66,12 +131,34 @@ public class PartDatabase extends DatabaseHelper{
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 int partId = cursor.getInt(0);
-                category = categoryDatabase.getById(cursor.getInt(1));
-                model = modelDatabase.getById(cursor.getString(2));
+                model = modelDatabase.getById(cursor.getString(1));
+                category = categoryDatabase.getById(cursor.getInt(2));
                 String name = cursor.getString(3);
                 int qty = cursor.getInt(4);
                 float price = cursor.getFloat(5);
-                part = new Part(partId, category, model, name, qty, price);
+                int restId = cursor.getInt(6);
+                part = new Part(partId, category, model, name, qty, price, restId);
+                cursor.moveToNext();
+            }
+        }
+
+        return part;
+    }
+
+    public Part getByRestId(String id) {
+        database = this.getReadableDatabase();
+        cursor = database.rawQuery("select * from part where rest_id like ?", new String[] {id});
+
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                int partId = cursor.getInt(0);
+                model = modelDatabase.getById(cursor.getString(1));
+                category = categoryDatabase.getById(cursor.getInt(2));
+                String name = cursor.getString(3);
+                int qty = cursor.getInt(4);
+                float price = cursor.getFloat(5);
+                int restId = cursor.getInt(6);
+                part = new Part(partId, category, model, name, qty, price, restId);
                 cursor.moveToNext();
             }
         }
@@ -90,12 +177,13 @@ public class PartDatabase extends DatabaseHelper{
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 int partId = cursor.getInt(0);
-                category = categoryDatabase.getById(cursor.getInt(1));
-                model = modelDatabase.getById(cursor.getString(2));
+                model = modelDatabase.getById(cursor.getString(1));
+                category = categoryDatabase.getById(cursor.getInt(2));
                 String name = cursor.getString(3);
                 int qty = cursor.getInt(4);
                 float price = cursor.getFloat(5);
-                partList.add(new Part(partId, category, model, name, qty, price));
+                int restId = cursor.getInt(6);
+                partList.add(new Part(partId, category, model, name, qty, price, restId));
                 cursor.moveToNext();
             }
         }
@@ -114,12 +202,13 @@ public class PartDatabase extends DatabaseHelper{
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 int partId = cursor.getInt(0);
-                category = categoryDatabase.getById(cursor.getInt(1));
-                model = modelDatabase.getById(cursor.getString(2));
+                model = modelDatabase.getById(cursor.getString(1));
+                category = categoryDatabase.getById(cursor.getInt(2));
                 String name = cursor.getString(3);
                 int qty = cursor.getInt(4);
                 float price = cursor.getFloat(5);
-                partList.add(new Part(partId, category, model, name, qty, price));
+                int restId = cursor.getInt(6);
+                partList.add(new Part(partId, category, model, name, qty, price, restId));
                 cursor.moveToNext();
             }
         }
@@ -138,16 +227,16 @@ public class PartDatabase extends DatabaseHelper{
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 int partId = cursor.getInt(0);
-                category = categoryDatabase.getById(cursor.getInt(1));
-                model = modelDatabase.getById(cursor.getString(2));
+                model = modelDatabase.getById(cursor.getString(1));
+                category = categoryDatabase.getById(cursor.getInt(2));
                 String name = cursor.getString(3);
                 int qty = cursor.getInt(4);
                 float price = cursor.getFloat(5);
-                partList.add(new Part(partId, category, model, name, qty, price));
+                int restId = cursor.getInt(6);
+                partList.add(new Part(partId, category, model, name, qty, price, restId));
                 cursor.moveToNext();
             }
         }
-
         return partList;
     }
 
@@ -158,11 +247,29 @@ public class PartDatabase extends DatabaseHelper{
         contentValues.put("name", part.getName());
         contentValues.put("qty", part.getQty());
         contentValues.put("price", part.getPrice());
+        contentValues.put("rest_id", part.getRestId());
 
         String[] args = new String[] {part.getId() + ""};
 
         database = this.getWritableDatabase();
         database.update("part", contentValues, "id=?", args);
+    }
+
+    public void update(List<Part> partList) {
+        for (Part updatedPart: partList) {
+            contentValues = new ContentValues();
+            contentValues.put("category_id", updatedPart.getCategory().getId());
+            contentValues.put("model_id", updatedPart.getModel().getId());
+            contentValues.put("name", updatedPart.getName());
+            contentValues.put("qty", updatedPart.getQty());
+            contentValues.put("price", updatedPart.getPrice());
+            contentValues.put("rest_id", updatedPart.getRestId());
+
+            String[] args = new String[] {updatedPart.getId() + ""};
+
+            database = this.getWritableDatabase();
+            database.update("part", contentValues, "id=?", args);
+        }
     }
 
     public void delete(Part part) {

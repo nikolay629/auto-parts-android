@@ -167,6 +167,7 @@ public class PartCreateEditFragment extends Fragment {
 
             partDeleteB.setVisibility(View.VISIBLE);
             partCreateB.setVisibility(View.GONE);
+            partDeleteB.setOnClickListener(this::onClickDeleteButton);
         } else {
             partDeleteB.setVisibility(View.GONE);
             partCreateB.setVisibility(View.GONE);
@@ -213,8 +214,8 @@ public class PartCreateEditFragment extends Fragment {
     private boolean isValid() {
         return
             partCreateEditBrandS.getSelectedItem().toString() != null
-            && partCreateEditBrandS.getSelectedItem().toString() != null
-            && partCreateEditBrandS.getSelectedItem().toString() != null
+            && partCreateEditModelS.getSelectedItem().toString() != null
+            && partCreateEditCategoryS.getSelectedItem().toString() != null
             && partCreateEditPartNameET.getText().toString() != null
             && partCreateEditPartQtyET.getText().toString() != null
             && partCreateEditPartPriceET.getText().toString() != null;

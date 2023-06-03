@@ -6,6 +6,7 @@ public class Model {
     private int id;
     private Brand brand;
     private String name;
+    private int restId;
 
     public Model() {}
 
@@ -18,6 +19,13 @@ public class Model {
         this.id = id;
         this.brand = brand;
         this.name = name;
+    }
+
+    public Model(int id, Brand brand, String name, int restId) {
+        this.id = id;
+        this.brand = brand;
+        this.name = name;
+        this.restId = restId;
     }
 
     public int getId() {
@@ -42,6 +50,14 @@ public class Model {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getRestId() {
+        return restId;
+    }
+
+    public void setRestId(int restId) {
+        this.restId = restId;
     }
 
     @NonNull

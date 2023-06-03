@@ -12,9 +12,7 @@
     <string name="menu_brand">Brand</string>
     <string name="menu_model">Model</string>
     <string name="menu_category">Category</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_synchronize">Synchronize</string>
+
     <string name="title_activity_brand">BrandActivity</string>
-    <string name="menu_gallery">Gallery</string>
-    <string name="menu_slideshow">Slideshow</string>
 </resources>

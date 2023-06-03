@@ -30,19 +30,9 @@ import java.util.List;
  */
 public class SearchFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private Spinner homeBrandS;
     private Spinner homeModelS;
     private Spinner homeCategoryS;
-    private Spinner homePartNameS;
     private Button homeSearchB;
 
     private BrandDatabase brandDatabase;
@@ -51,11 +41,9 @@ public class SearchFragment extends Fragment {
 
     public SearchFragment() {}
 
-    public static SearchFragment newInstance(String param1, String param2) {
+    public static SearchFragment newInstance() {
         SearchFragment fragment = new SearchFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -63,26 +51,23 @@ public class SearchFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
         brandDatabase = new BrandDatabase(getContext());
         modelDatabase = new ModelDatabase(getContext());
         categoryDatabase = new CategoryDatabase(getContext());
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(
+            LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState
+    ) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
         getActivity().findViewById(R.id.homeBackB).setVisibility(View.GONE);
 
         homeBrandS = view.findViewById(R.id.homeBrandS);
         homeModelS = view.findViewById(R.id.homeModelS);
         homeCategoryS = view.findViewById(R.id.homeCategoryS);
-        homePartNameS = view.findViewById(R.id.homePartNameS);
         homeSearchB = view.findViewById(R.id.homeSearchB);
 
         List<Brand> brandList = new ArrayList<>();

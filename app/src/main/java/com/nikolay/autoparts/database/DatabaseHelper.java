@@ -17,24 +17,33 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
     protected Cursor cursor;
 
     public DatabaseHelper(@Nullable Context context) {
-        super(context, NAME, null, 3);
+        super(context, NAME, null, 10);
+    }
+
+    @Override
+    public void onOpen(SQLiteDatabase db) {
+        super.onOpen(db);
+        db.execSQL("PRAGMA foreign_keys=ON");
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table category(" +
                 "id integer primary key," +
-                "name text unique"+
+                "name text unique," +
+                "rest_id int"+
                 ")");
         db.execSQL("create table brand(" +
                 "id integer primary key, " +
-                "name text unique" +
+                "name text unique," +
+                "rest_id int"+
                 ")");
         db.execSQL("create table model(" +
                 "id integer primary key," +
                 "brand_id integer," +
                 "name text," +
-                "Foreign Key(brand_id) References brand(id)" +
+                "rest_id int,"+
+                "Foreign Key(brand_id) References brand(id) ON DELETE CASCADE " +
                 ")");
         db.execSQL("create  table part(" +
                 "id integer primary key," +
@@ -42,7 +51,10 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
                 "category_id integer," +
                 "name text," +
                 "qty int," +
-                "price decimal(19,2)" +
+                "price decimal(19,2)," +
+                "rest_id int," +
+                "Foreign Key(model_id) References model(id) ON DELETE CASCADE ," +
+                "Foreign Key(category_id) References category(id) ON DELETE CASCADE "+
                 ")");
     }
 

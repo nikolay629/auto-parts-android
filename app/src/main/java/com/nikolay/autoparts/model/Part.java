@@ -7,6 +7,7 @@ public class Part {
     private String name;
     private int qty;
     private float price;
+    private int restId;
 
     public Part() {}
 
@@ -31,6 +32,25 @@ public class Part {
         this.name = name;
         this.qty = qty;
         this.price = price;
+    }
+
+
+    public Part(
+        int id,
+        Category category,
+        Model model,
+        String name,
+        int qty,
+        float price,
+        int restId
+    ) {
+        this.id = id;
+        this.category = category;
+        this.model = model;
+        this.name = name;
+        this.qty = qty;
+        this.price = price;
+        this.restId = restId;
     }
 
     public int getId() {
@@ -79,5 +99,13 @@ public class Part {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public int getRestId() {
+        return restId;
+    }
+
+    public void setRestId(int restId) {
+        this.restId = restId;
     }
 }

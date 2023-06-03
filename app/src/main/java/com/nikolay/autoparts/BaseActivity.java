@@ -55,6 +55,8 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             startActivity(new Intent(this, ModelActivity.class));
         } else if (item.getItemId() == R.id.nav_category) {
             startActivity(new Intent(this, CategoryActivity.class));
+        } else if (item.getItemId() == R.id.nav_synchronize) {
+            startActivity(new Intent(this, SynchronizeActivity.class));
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
