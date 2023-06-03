@@ -4,10 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 
 import androidx.annotation.Nullable;
-import androidx.transition.Visibility;
 
 import com.nikolay.autoparts.model.Brand;
-import com.nikolay.autoparts.model.Category;
 import com.nikolay.autoparts.model.Model;
 
 import java.util.ArrayList;
@@ -170,7 +168,8 @@ public class ModelDatabase extends DatabaseHelper{
     public void update(List<Model> modelList) {
         for (Model updatedModel: modelList) {
             contentValues = new ContentValues();
-            contentValues.put("brand_id", updatedModel.getBrand().getId());
+            brand = brandDatabase.getByRestId(updatedModel.getBrand().getRestId() + "");
+            contentValues.put("brand_id", brand.getId());
             contentValues.put("name", updatedModel.getName());
             contentValues.put("rest_id", updatedModel.getRestId());
 
