@@ -172,6 +172,42 @@ public class ModelRest {
         });
     }
 
+    public void getWithDifference(List<Model> modelList, boolean duplicate) {
+        dialog.setTitle("Check for difference. Please wait.");
+        dialog.show();
+        modelApi.getWithDifference(modelList).enqueue(new Callback<List<Model>>() {
+            @Override
+            public void onResponse(Call<List<Model>> call, Response<List<Model>> response) {
+                if (!response.isSuccessful()) {
+                    createToastMessage("Model: Something went wrong!");
+                    dialog.hide();
+                    return;
+                }
+
+                String message;
+                if (response.body() != null) {
+                    if (!duplicate) {
+                        modelDatabase.update(response.body());
+                    } else {
+                        modelDatabase.insert(response.body());
+                    }
+                    message = "Model: Complete Successfully!";
+                } else {
+                    message = "Model: Already up to date!";
+                }
+                createToastMessage(message);
+                dialog.hide();
+            }
+
+            @Override
+            public void onFailure(Call<List<Model>> call, Throwable t) {
+                createToastMessage(t.getMessage());
+                dialog.hide();
+
+            }
+        });
+    }
+
     private void createToastMessage(String message) {
         Toast.makeText(
                 getContext(),

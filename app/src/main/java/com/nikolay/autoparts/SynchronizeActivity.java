@@ -70,7 +70,6 @@ public class SynchronizeActivity extends BaseActivity {
         synchronizeDuplicateB.setOnClickListener(this::onClickDuplicateButton);
     }
 
-
     private void onClickCheckButton(View view) {
         brandRest.checkForDifference(brandDatabase.getAll());
         categoryRest.checkForDifference(categoryDatabase.getAll());
@@ -100,10 +99,16 @@ public class SynchronizeActivity extends BaseActivity {
     }
 
     private void onClickUpdateLocalDBButton(View view) {
-
+        brandRest.getWithDifference(brandDatabase.getAllOldData(), false);
+        categoryRest.getWithDifference(categoryDatabase.getAllOldData(), false);
+        modelRest.getWithDifference(modelDatabase.getAllOldData(), false);
+        partRest.getWithDifference(partDatabase.getAllOldData(), false);
     }
 
     private void onClickDuplicateButton(View view) {
-
+        brandRest.getWithDifference(brandDatabase.getAllOldData(), true);
+        categoryRest.getWithDifference(categoryDatabase.getAllOldData(), true);
+        modelRest.getWithDifference(modelDatabase.getAllOldData(), true);
+        partRest.getWithDifference(partDatabase.getAllOldData(), true);
     }
 }

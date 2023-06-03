@@ -54,7 +54,7 @@ public class PartDatabase extends DatabaseHelper{
             contentValues.put("rest_id", newPart.getRestId());
 
             database = this.getWritableDatabase();
-            database.insert("model", null, contentValues);
+            database.insert("part", null, contentValues);
         }
     }
 
@@ -257,9 +257,12 @@ public class PartDatabase extends DatabaseHelper{
 
     public void update(List<Part> partList) {
         for (Part updatedPart: partList) {
+            category = categoryDatabase.getByRestId(updatedPart.getCategory().getRestId() + "");
+            model = modelDatabase.getByRestId(updatedPart.getModel().getRestId() + "");
+
             contentValues = new ContentValues();
-            contentValues.put("category_id", updatedPart.getCategory().getId());
-            contentValues.put("model_id", updatedPart.getModel().getId());
+            contentValues.put("category_id", category.getId());
+            contentValues.put("model_id", model.getId());
             contentValues.put("name", updatedPart.getName());
             contentValues.put("qty", updatedPart.getQty());
             contentValues.put("price", updatedPart.getPrice());

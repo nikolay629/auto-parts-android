@@ -173,6 +173,42 @@ public class BrandRest {
         });
     }
 
+    public void getWithDifference(List<Brand> brandList, boolean duplicate) {
+        dialog.setTitle("Check for difference. Please wait.");
+        dialog.show();
+        brandApi.getWithDifference(brandList).enqueue(new Callback<List<Brand>>() {
+            @Override
+            public void onResponse(Call<List<Brand>> call, Response<List<Brand>> response) {
+                if (!response.isSuccessful()) {
+                    createToastMessage("Brand: Something went wrong!");
+                    dialog.hide();
+                    return;
+                }
+
+                String message;
+                if (response.body() != null) {
+                    if (!duplicate) {
+                        brandDatabase.update(response.body());
+                    } else {
+                        brandDatabase.insert(response.body());
+                    }
+                    message = "Brand: Complete Successfully!";
+                } else {
+                    message = "Brand: Already up to date!";
+                }
+                createToastMessage(message);
+                dialog.hide();
+            }
+
+            @Override
+            public void onFailure(Call<List<Brand>> call, Throwable t) {
+                createToastMessage(t.getMessage());
+                dialog.hide();
+
+            }
+        });
+    }
+
     private void createToastMessage(String message) {
         Toast.makeText(
                 getContext(),

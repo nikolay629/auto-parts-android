@@ -136,7 +136,6 @@ public class CategoryRest {
         });
     }
 
-
     public void getAllNew(List<Category> categoryList) {
         dialog.setTitle("Create From Service. Please wait.");
         dialog.show();
@@ -169,6 +168,42 @@ public class CategoryRest {
             public void onFailure(Call<List<Category>> call, Throwable t) {
                 createToastMessage(t.getMessage());
                 dialog.hide();
+            }
+        });
+    }
+
+    public void getWithDifference(List<Category> categoryList, boolean duplicate) {
+        dialog.setTitle("Check for difference. Please wait.");
+        dialog.show();
+        categoryApi.getWithDifference(categoryList).enqueue(new Callback<List<Category>>() {
+            @Override
+            public void onResponse(Call<List<Category>> call, Response<List<Category>> response) {
+                if (!response.isSuccessful()) {
+                    createToastMessage("Category: Something went wrong!");
+                    dialog.hide();
+                    return;
+                }
+
+                String message;
+                if (response.body() != null) {
+                    if (!duplicate) {
+                        categoryDatabase.update(response.body());
+                    } else {
+                        categoryDatabase.insert(response.body());
+                    }
+                    message = "Category: Complete Successfully!";
+                } else {
+                    message = "Category: Already up to date!";
+                }
+                createToastMessage(message);
+                dialog.hide();
+            }
+
+            @Override
+            public void onFailure(Call<List<Category>> call, Throwable t) {
+                createToastMessage(t.getMessage());
+                dialog.hide();
+
             }
         });
     }

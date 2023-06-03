@@ -17,7 +17,7 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
     protected Cursor cursor;
 
     public DatabaseHelper(@Nullable Context context) {
-        super(context, NAME, null, 10);
+        super(context, NAME, null, 11);
     }
 
     @Override
@@ -30,12 +30,12 @@ public abstract class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table category(" +
                 "id integer primary key," +
-                "name text unique," +
+                "name text," +
                 "rest_id int"+
                 ")");
         db.execSQL("create table brand(" +
                 "id integer primary key, " +
-                "name text unique," +
+                "name text," +
                 "rest_id int"+
                 ")");
         db.execSQL("create table model(" +

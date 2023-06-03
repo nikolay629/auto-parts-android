@@ -5,8 +5,6 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.nikolay.autoparts.database.PartDatabase;
-import com.nikolay.autoparts.model.Brand;
-import com.nikolay.autoparts.model.Category;
 import com.nikolay.autoparts.model.Part;
 import com.nikolay.autoparts.retrofit.PartApi;
 import com.nikolay.autoparts.retrofit.RetrofitService;
@@ -168,6 +166,42 @@ public class PartRest {
             public void onFailure(Call<List<Part>> call, Throwable t) {
                 createToastMessage(t.getMessage());
                 dialog.hide();
+            }
+        });
+    }
+
+    public void getWithDifference(List<Part> partList, boolean duplicate) {
+        dialog.setTitle("Check for difference. Please wait.");
+        dialog.show();
+        partApi.getWithDifference(partList).enqueue(new Callback<List<Part>>() {
+            @Override
+            public void onResponse(Call<List<Part>> call, Response<List<Part>> response) {
+                if (!response.isSuccessful()) {
+                    createToastMessage("Part: Something went wrong!");
+                    dialog.hide();
+                    return;
+                }
+
+                String message;
+                if (response.body() != null) {
+                    if (!duplicate) {
+                        partDatabase.update(response.body());
+                    } else {
+                        partDatabase.insert(response.body());
+                    }
+                    message = "Part: Complete Successfully!";
+                } else {
+                    message = "Part: Already up to date!";
+                }
+                createToastMessage(message);
+                dialog.hide();
+            }
+
+            @Override
+            public void onFailure(Call<List<Part>> call, Throwable t) {
+                createToastMessage(t.getMessage());
+                dialog.hide();
+
             }
         });
     }
